@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Product } from "../../models/Product";
+import { NavLink } from "react-router-dom";
 
 type Props = {
   product: Product;
@@ -43,7 +44,10 @@ export const ProductCard = ({ product }: Props) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between" }}>
-        <Button></Button>
+        <Button component={NavLink} to={`/catalog/${product.id}`}>
+          View
+        </Button>
+        <Button>Add to cart</Button>
       </CardActions>
     </Card>
   );
