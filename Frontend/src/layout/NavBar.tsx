@@ -5,6 +5,7 @@ import {
   FormControlLabel,
   FormGroup,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   Toolbar,
@@ -13,6 +14,8 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { setDarkMode } from "./uiSlice";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -37,12 +40,10 @@ const navStyles = {
   },
 };
 
-type Props = {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-};
+export const NavBar = () => {
+  const { isLoading, darkMode } = useAppSelector((state) => state.ui);
+  const dispatch = useAppDispatch();
 
-export const NavBar = ({ darkMode, toggleDarkMode }: Props) => {
   return (
     <AppBar position="fixed">
       <Toolbar
@@ -62,7 +63,7 @@ export const NavBar = ({ darkMode, toggleDarkMode }: Props) => {
                 <DarkModeSwitch
                   sx={{ m: 1 }}
                   checked={darkMode}
-                  onChange={toggleDarkMode}
+                  onChange={() => dispatch(setDarkMode())}
                 />
               }
               label=""
@@ -105,6 +106,11 @@ export const NavBar = ({ darkMode, toggleDarkMode }: Props) => {
           </List>
         </Box>
       </Toolbar>
+      {isLoading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
+      )}
     </AppBar>
   );
 };
