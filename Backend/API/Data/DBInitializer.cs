@@ -12,13 +12,14 @@ public class DBInitializer
         var context =
             scope.ServiceProvider.GetRequiredService<StoreContext>()
             ?? throw new InvalidOperationException("Failed to retrieve the context");
+
+        context.Database.Migrate();
+
         SeedData(context);
     }
 
     private static void SeedData(StoreContext context)
     {
-        context.Database.Migrate();
-
         if (context.Products.Any())
             return;
 
